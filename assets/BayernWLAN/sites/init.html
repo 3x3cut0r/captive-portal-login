@@ -1,0 +1,265 @@
+<!--
+view-source:https://hotspot.vodafone.de/bayern/?A=B&RequestedURI=http%3A%2F%2Fdetectportal.firefox.com%2Fcanonical.html
+-->
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Hotspot | Vodafone </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <!-- Fav icons -->
+    <link rel="shortcut icon" href="img/favicon.png?v=25.04.0">
+    <!-- Gulp -->
+    <link rel="stylesheet" href="dist/style.css?v=25.04.0"/>
+    <script src="dist/js/all.min.js?v=25.04.0"></script>
+</head>
+
+<body class="start" ng-controller="main">
+<div class="hundert">
+    <header id="kopf">
+        <div class="navbar" style="position: relative">
+            <div class="navbar-inner">
+                <div class="container">
+                    <div class="content">
+                        <a class="brand hotsp"></a>
+                        <div class="pull-left headline" style="padding-top: 1px">
+                            <h1>{{translate.home.headline}}</h1>
+                            <p class="lead">{{translate.home.subline}}</p>
+                        </div>
+                        <div class="img-container">
+                            <span class="helper"></span>
+                            <img id="ownLogo" ng-if="session.logo != null" ng-src="{{session.logoBase}}{{session.logo}}.png?v=25.04.0"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <span class="schatten"></span>
+    <section id="inhalt">
+        <div class="container">
+            <p class="moeg" style="display: none;"></p>
+            <span class="acIEoben"><span class="le"></span><span class="re"></span></span>
+            <noscript>
+                <div style="border: 1px solid purple;  text-align: center;  padding: 10px">
+                    <p style="color:red">Bitte aktivieren Sie JavaScript um die Website nutzen zu können.</p>
+                </div>
+            </noscript>
+            <div class="errorMes alert-warning" ng-if="error == 500">
+                {{translate.global.generic_error_500}}
+            </div>
+            <div id="resolut"></div>
+
+            <div ng-repeat="element in session.timeoutPageElements">
+                <form ng-if="element.value == 6" id="loginForm" target="_blank" rel="noopener" rel="noreferrer" method="get" action="/api/v4/login?" onsubmit="setTimeout('parent.location.reload()',5000);">
+                    <fieldset>
+                        <div id="MyImage">
+                            <img id="myLogo" ng-src="./img/baykom/bayernLogo.png?v=25.04.0"/>
+                            <img id="theImage" ng-if="session.backgroundImage != null" ng-src="https://hotspot.vodafone.de/static/logos/{{session.backgroundImage}}.png?v=25.04.0"/>
+                            <div id="noImage" ng-if="session.backgroundImage == null"></div>
+                        </div>
+                        <div style="height:4px;">
+                            <br>
+                        </div>
+
+                        <div id="btn" class="manage" style="padding-top: 1px">
+                            <a style="padding: 11px 10px; cursor: pointer; border-radius: 5px;">
+                                <select ng-change="setLocale(locale)" ng-model="locale" style="padding: 11px 10px; margin-top: 8px; width: auto; height: auto; border-radius: 5px;">
+                                    <option value="de">De</option>
+                                    <option value="en">En</option>
+                                    <option value="ua">Ua</option>
+                                    <option value="ru">Ru</option>
+                                </select>
+                            </a>
+                            <button href="http://www.bild.de" target="_blank" rel="noopener" ng-show="!session.disabled && session.currentLoginProfile == null" id="element" ng-disabled="session.currentLoginProfile != null || session.disabled" type="submit" style="padding: 11px 45px; border-radius: 5px;" class="btn btn-large btn-submit-form btn-primary"><span class="ieLe"></span>{{translate.global.connect}}<span class="ieRe"></span></button>
+                            <!-- <a ng-show="session.currentLoginProfile == null" ng-disabled="element.warnTerms" ng-click="handleLogin(element)" class="startButton"><span class="ieLe"></span>{{translate.global.start}}<span class="ieRe"></span></a> -->
+                            <button ng-show="!session.disabled && session.currentLoginProfile != null" ng-disabled="session.currentLoginProfile != null || session.disabled" style="padding: 11px 45px; border-radius: 5px;" class="btn btn-large btn-submit-form btn-primary"><span class="ieLe"></span>{{translate.global.connected}}<span class="ieRe"></span></button>
+                            <button ng-show="session.disabled" href="{{session.appUrl}}" ng-disabled="session.disabled" style="padding: 11px 45px; border-radius: 5px;" class="btn btn-large btn-submit-form btn-primary"><span class="ieLe"></span>{{translate.global.connect}}<span class="ieRe"></span></button>&nbsp;
+                            <button id="element" href="#faq-simple" data-toggle="modal" style="padding: 11px 10px; border-radius: 5px;" class="btn btn-large btn-submit-form btn-primary"><span class="ieLe"></span>{{translate.global.faqt}}<span class="ieRe"></span></button>
+                        </div>
+
+                        <label class="text-center" ng-if="session.currentLoginProfile == null && !session.disabled" for="ecb-{{$index}}" style="color: #ffffff;">
+                            {{translate.global.baykom_terms}}<a href="#nutzungs-simple" role="button" style="color: #ffffff;text-decoration: underline;" data-toggle="modal">&nbsp;{{translate.global.terms}}&nbsp;</a>
+                            <!--          <br> Antworten auf häufig gestellte Fragen <a href="#nutzungs-simple" role="button" style="color: #ffffff;text-decoration: underline;" data-toggle="modal">&nbsp;(FAQ)&nbsp;</a> -->
+                        </label>
+                        <div ng-if="session.currentLoginProfile != null">
+                            <br>
+                        </div>
+
+                        <label class="text-center" ng-if="session.disabled" for="ecb-{{$index}}" style="color: #ffffff;">{{translate.global.disabled.offlineText}}</label>
+                        <tr ng-repeat="">
+                            <label class="text-center" ng-if="session.disabled" for="ecb-{{$index}}" style="color: #ffffff;"> {{translate.global.disabled.from}} {{scheduleTime()}} {{translate.global.disabled.surf}}</label>
+                        </tr>
+
+                        <br>
+                        <div ng-if="session.currentLoginProfile != null" style="height:4px;">
+                            <br>
+                        </div>
+
+                        <div id="foot" ng-if="session.backgroundImage == null"></div>
+                        <input type="hidden" name="loginProfile" value='6'>
+                        <input type="hidden" name="accessType" value="termsOnly">
+                        <input type="hidden" name="{{operatingMode.queryKey}}" value="{{operatingMode.value}}">
+                        <input ng-if="operatingMode.queryKey != 'sessionID'" type="hidden" name="sessionID" value="{{session.session}}">
+                        <input type="hidden" name="action" value="redirect">
+                        <input type="hidden" name="portal" value="bayern">
+                    </fieldset>
+                </form>
+            </div>
+            <br>
+            <br>
+            <span class="acIEunten"><span class="le"></span><span class="re"></span></span>
+
+            <!-- Modal Screen: Nutzungsbedinungen -->
+            <div id="nutzungs-simple" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="NutzungsH3" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="NutzungsH3">{{translate.terms_of_use_popup.title}}</h3>
+                </div>
+                <div class="modal-body" ng-bind-html="translate.terms.3.content"></div>
+                <div class="modal-footer">
+                    <a href="https://hotspot.vodafone.de/static/nutzungsbedingungen_baykom.pdf" class="nPdf" target="_blank" rel="noopener">{{translate.terms_of_use_popup.pdf_download}}</a>
+                    <a href="#" class="btn btn-large btn-block" data-dismiss="modal" aria-hidden="true"><span class="ieLe"></span>{{translate.global.close}}<span class="ieRe"></span></a>
+                </div>
+            </div>
+
+            <!-- Modal Screen: FAQ -->
+            <div id="faq-simple" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="FAQ" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="FAQ">FAQ</h3>
+                </div>
+                <!-- <div class="modal-body" ng-bind-html="translate.global.faq.content"></div> -->
+                <div class="modal-body">
+                    <div id="accordion">
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                                    {{translate.global.faq.question1}}
+                                </a>
+                            </div>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body">
+                                    {{translate.global.faq.answer1}}
+                                    <br>
+                                    {{translate.global.faq.answer1_1}}
+                                    <br>
+                                    {{translate.global.faq.answer1_2}}
+                                    <br>
+                                    {{translate.global.faq.answer1_3}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                                    {{translate.global.faq.question2}}
+                                </a>
+                            </div>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    {{translate.global.faq.answer2}}
+                                    <br>
+                                    {{translate.global.faq.answer2_1}}
+                                    <br>
+                                    {{translate.global.faq.answer2_2}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                                    {{translate.global.faq.question3}}
+                                </a>
+                            </div>
+                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                <div>
+                                    {{translate.global.faq.answer3}}
+                                    <br>
+                                    {{translate.global.faq.answer3_1}}
+                                    <br>
+                                    {{translate.global.faq.answer3_2}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+                                    {{translate.global.faq.question4}}
+                                </a>
+                            </div>
+                            <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    {{translate.global.faq.answer4}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive">
+                                    {{translate.global.faq.question5}}
+                                </a>
+                            </div>
+                            <div id="collapseFive" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    {{translate.global.faq.answer5}}
+                                    <br>
+                                    {{translate.global.faq.answer5_1}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link" data-toggle="collapse" href="#collapseSix">
+                                    {{translate.global.faq.question6}}
+                                </a>
+                            </div>
+                            <div id="collapseSix" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    {{translate.global.faq.answer6}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-large btn-block" data-dismiss="modal" aria-hidden="true"><span class="ieLe"></span>{{translate.global.close}}<span class="ieRe"></span></a>
+                </div>
+            </div>
+
+            <!-- Modal Screen: Generic modal screen -->
+            <div id="genericModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="genericModal" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="genericModal">
+                        <!-- Empty -->
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <!-- Empty -->
+                </div>
+                <div class="modal-footer">
+                    <!-- Empty -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer id="fuss" class="curved curved-hz-2" style="position: relative;">
+        <div class="container">
+            <div class="nav nav-pills fn1">
+                <div class="text-center" style="font-size: 14px;font-family: 'VodafoneRgRegular';"><a class="text-center" ng-click="handleLogout(element)" role="button">Accesspoint ID: {{session.hotspotName}}</a> - <a href="http://www.vodafone.de/impressum.html" target="_blank" rel="noopener" role="button">{{translate.impressum_popup.title}}</a> - <a>0800-6648386</a></div>
+            </div>
+            <div class="clearer"></div>
+        </div>
+    </footer>
+</div>
+<script type="application/javascript">
+    angular.bootstrap(document, ['kdgwifi']);
+</script>
+<script type="text/javascript" src='https://hotspot.vodafone.de/api/v4/check'></script>
+</body>
+
+</html>

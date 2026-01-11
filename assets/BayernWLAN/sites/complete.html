@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="de">
+<head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}.ng-hide-add-active,.ng-hide-remove{display:block!important;}</style>
+    <meta charset="utf-8">
+    <title>Hotspot | Vodafone </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Fav icons -->
+    <link rel="shortcut icon" href="img/favicon.png?v=25.04.0">
+    <!-- Gulp -->
+    <link rel="stylesheet" href="dist/style.css?v=25.04.0">
+    <script src="dist/js/all.min.js?v=25.04.0"></script>
+</head>
+
+<body class="start ng-scope" ng-controller="main">
+<div class="hundert">
+    <header id="kopf">
+        <div class="navbar" style="position: relative">
+            <div class="navbar-inner">
+                <div class="container">
+                    <div class="content">
+                        <a class="brand hotsp"></a>
+                        <div class="pull-left headline" style="padding-top: 1px">
+                            <h1 class="ng-binding">Willkommen</h1>
+                            <p class="lead ng-binding">im Vodafone-Hotspot mit Highspeed-Internet</p>
+                        </div>
+                        <div class="img-container">
+                            <span class="helper"></span>
+                            <!-- ngIf: session.logo != null -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <span class="schatten"></span>
+    <section id="inhalt">
+        <div class="container">
+            <p class="moeg" style="display: none;"></p>
+            <span class="acIEoben"><span class="le"></span><span class="re"></span></span>
+            <noscript>
+                <div style="border: 1px solid purple;  text-align: center;  padding: 10px">
+                    <p style="color:red">Bitte aktivieren Sie JavaScript um die Website nutzen zu können.</p>
+                </div>
+            </noscript>
+            <!-- ngIf: error == 500 -->
+            <div id="resolut"></div>
+
+            <!-- ngRepeat: element in session.timeoutPageElements --><div ng-repeat="element in session.timeoutPageElements" class="ng-scope">
+                <!-- ngIf: element.value == 6 --><form ng-if="element.value == 6" id="loginForm" target="_blank" rel="noopener" method="get" action="/api/v4/login?" onsubmit="setTimeout('parent.location.reload()',5000);" class="ng-scope ng-pristine ng-valid">
+                    <fieldset>
+                        <div id="MyImage">
+                            <img id="myLogo" ng-src="./img/baykom/bayernLogo.png?v=25.04.0" src="./img/baykom/bayernLogo.png?v=25.04.0">
+                            <!-- ngIf: session.backgroundImage != null --><img id="theImage" ng-if="session.backgroundImage != null" ng-src="https://hotspot.vodafone.de/static/logos/bg-11_975627348.jpg?t=1764229840.png?v=25.04.0" class="ng-scope" src="https://hotspot.vodafone.de/static/logos/bg-11_975627348.jpg?t=1764229840.png?v=25.04.0"><!-- end ngIf: session.backgroundImage != null -->
+                            <!-- ngIf: session.backgroundImage == null -->
+                        </div>
+                        <div style="height:4px;">
+                            <br>
+                        </div>
+
+                        <div id="btn" class="manage" style="padding-top: 1px">
+                            <a style="padding: 11px 10px; cursor: pointer; border-radius: 5px;">
+                                <select ng-change="setLocale(locale)" ng-model="locale" style="padding: 11px 10px; margin-top: 8px; width: auto; height: auto; border-radius: 5px;" class="ng-pristine ng-valid">
+                                    <option value="de">De</option>
+                                    <option value="en">En</option>
+                                    <option value="ua">Ua</option>
+                                    <option value="ru">Ru</option>
+                                </select>
+                            </a>
+                            <button href="http://www.bild.de" target="_blank" rel="noopener" ng-show="!session.disabled &amp;&amp; session.currentLoginProfile == null" id="element" ng-disabled="session.currentLoginProfile != null || session.disabled" type="submit" style="padding: 11px 45px; border-radius: 5px;" class="btn btn-large btn-submit-form btn-primary ng-binding"><span class="ieLe"></span>Verbinden<span class="ieRe"></span></button>
+                            <!-- <a ng-show="session.currentLoginProfile == null" ng-disabled="element.warnTerms" ng-click="handleLogin(element)" class="startButton"><span class="ieLe"></span>{{translate.global.start}}<span class="ieRe"></span></a> -->
+                            <button ng-show="!session.disabled &amp;&amp; session.currentLoginProfile != null" ng-disabled="session.currentLoginProfile != null || session.disabled" style="padding: 11px 45px; border-radius: 5px;" class="btn btn-large btn-submit-form btn-primary ng-binding ng-hide"><span class="ieLe"></span>Sie sind online<span class="ieRe"></span></button>
+                            <button ng-show="session.disabled" href="https://www.lrz.de/" ng-disabled="session.disabled" style="padding: 11px 45px; border-radius: 5px;" class="btn btn-large btn-submit-form btn-primary ng-binding ng-hide"><span class="ieLe"></span>Verbinden<span class="ieRe"></span></button>&nbsp;
+                            <button id="element" href="#faq-simple" data-toggle="modal" style="padding: 11px 10px; border-radius: 5px;" class="btn btn-large btn-submit-form btn-primary ng-binding"><span class="ieLe"></span>FAQ<span class="ieRe"></span></button>
+                        </div>
+
+                        <!-- ngIf: session.currentLoginProfile == null && !session.disabled --><label class="text-center ng-binding ng-scope" ng-if="session.currentLoginProfile == null &amp;&amp; !session.disabled" for="ecb-0" style="color: #ffffff;">
+                            Mit Klick auf „Verbinden“ akzeptieren Sie die<a href="#nutzungs-simple" role="button" style="color: #ffffff;text-decoration: underline;" data-toggle="modal" class="ng-binding">&nbsp;Nutzungsbedingungen&nbsp;</a>
+                            <!--          <br> Antworten auf häufig gestellte Fragen <a href="#nutzungs-simple" role="button" style="color: #ffffff;text-decoration: underline;" data-toggle="modal">&nbsp;(FAQ)&nbsp;</a> -->
+                        </label><!-- end ngIf: session.currentLoginProfile == null && !session.disabled -->
+                        <!-- ngIf: session.currentLoginProfile != null -->
+
+                        <!-- ngIf: session.disabled -->
+                        
+                            <!-- ngIf: session.disabled -->
+                        
+
+                        <br>
+                        <!-- ngIf: session.currentLoginProfile != null -->
+
+                        <!-- ngIf: session.backgroundImage == null -->
+                        <input type="hidden" name="loginProfile" value="6">
+                        <input type="hidden" name="accessType" value="termsOnly">
+                        <input type="hidden" name="sessionID" value="ba1dfa890c562f344b03c7456b42d4ac">
+                        <!-- ngIf: operatingMode.queryKey != 'sessionID' -->
+                        <input type="hidden" name="action" value="redirect">
+                        <input type="hidden" name="portal" value="bayern">
+                    </fieldset>
+                </form><!-- end ngIf: element.value == 6 -->
+            </div><!-- end ngRepeat: element in session.timeoutPageElements --><div ng-repeat="element in session.timeoutPageElements" class="ng-scope">
+                <!-- ngIf: element.value == 6 -->
+            </div><!-- end ngRepeat: element in session.timeoutPageElements -->
+            <br>
+            <br>
+            <span class="acIEunten"><span class="le"></span><span class="re"></span></span>
+
+            <!-- Modal Screen: Nutzungsbedinungen -->
+            <div id="nutzungs-simple" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="NutzungsH3" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="NutzungsH3" class="ng-binding">Nutzungsbedingungen</h3>
+                </div>
+                <div class="modal-body ng-binding" ng-bind-html="translate.terms.3.content"><h2>BayernWLAN</h2>
+
+
+
+<h3>Nutzungsbedingungen</h3>
+
+
+
+<h4>A. Leistungsbeschreibung</h4>
+
+1. Die Vodafone GmbH, Ferdinand-Braun-Platz 1, 40549 Düsseldorf (nachfolgend: „Vodafone“) stellt Ihnen als Nutzer folgenden Dienst (nachfolgend: „Dienst“) zur Verfügung: die Möglichkeit, mithilfe drahtloser Technologie (sog. Wireless Local Area Network, WLAN) von bestimmten Standorten, an denen sich Zugangspunkte für den gegenständlichen Dienst befinden (Hotspot), auf das Internet zuzugreifen und über das Internet Daten zu senden und zu empfangen.<br>
+
+<br>
+
+
+2. Die Bereitstellung des Dienstes richtet sich nach den jeweiligen technischen und betrieblichen Möglichkeiten. Eine jederzeitige und ununterbrochen störungsfreie Zurverfügungstellung wird nicht zugesagt. Der Dienst kann durch geografische, atmosphärische oder sonstige Bedingungen oder Umstände, die außerhalb der Kontrolle von Vodafone liegen, beeinträchtigt werden. Die Übertragungs-geschwindigkeit während der Nutzung ist u. a. von der Netzauslastung des Internet-Backbones, von der Übertragungsgeschwindigkeit der angewählten Server des jeweiligen Inhalteanbieters und von der Anzahl der Nutzer am jeweiligen Hotspot abhängig.<br>
+
+<br>
+
+3. Eine Verpflichtung zur Gewährung des Zugangs am jeweiligen  Standort oder zur Bereitstellung des Dienstes an bestimmten Standorten oder an weiteren Hotspots besteht nicht. Sofern die Nutzung des Dienstes kostenlos ermöglicht wird, behält sich Vodafone vor, die Leistung zu jeder Zeit einzustellen, einzuschränken oder zu ändern. Eine Begründung hierfür ist nicht erforderlich. Bei Verdacht auf unverhältnismäßige Up- oder Downloads und/oder rechtswidrige Nutzung ist Vodafone berechtigt, den Zugang jederzeit zu sperren oder einzuschränken.<br>
+
+<br>
+
+4. Die drahtlose Verbindung erfolgt ohne eine Sicherheitsverschlüsselung. Es kann daher seitens Vodafone nicht ausgeschlossen werden, dass sich Dritte Zugriff auf die zwischen dem Nutzer und dem Hotspot übertragenen Daten verschaffen.<br>
+
+<br>
+
+5. An den BayernWLAN Hotspots wird ein Jugendschutzfilter eingesetzt, der das Aufrufen von vielen jugendgefährdenden Inhalten technisch unterbindet.<br>
+
+<br>
+
+
+<h4>B. Nutzungsbedingungen</h4>
+
+
+
+<h5>I. Nutzung</h5>
+
+Der Dienst steht den Nutzern an Hotspots, die ein entsprechendes Angebot vorsehen, gemäß den hier beschriebenen Nutzungsbedingungen zur Verfügung, sobald sie ihn auf unserer Anmeldeseite aufrufen und diese Nutzungsbedingungen akzeptieren. Danach steht der Dienst bis Ablauf des jeweiligen Kalendertages automatisch zur Verfügung, sobald die Nutzer mit diesem Gerät in den Bereich eines entsprechenden Hotspots von BayernWLAN gelangen. <br>
+
+<br>
+
+<h5>II. Nutzungsvoraussetzung</h5>
+
+Für die Nutzung von Hotspots ist ein betriebsbereites Endgerät (z. B. Laptop oder Smartphone) mit einer WLAN-fähigen Schnittstelle  Voraussetzung. Weiterhin müssen ein geeignetes Betriebssystem, ein Web-Browser, die aktuelle Treiber-Software der WLAN-Hardware sowie ein entsprechendes IP-Netzwerkprotokoll installiert und das System muss als DHCP-Client konfiguriert sein. Die Schaffung der Nutzungs-voraussetzungen obliegt dem Nutzer.<br>
+
+
+<h5>III. Pflichten und Obliegenheiten des Nutzers</h5>
+
+1. Der Nutzer ist verpflichtet,<br>
+
+<br>
+
+a. den überlassenen Dienst nicht zum Betreiben eines Servers und/oder für die dauerhafte Vernetzung oder Verbindung von Standorten bzw. Telekommunikationsanlagen zu nutzen;<br>
+
+<br>
+
+b. den Zugang zum Dienst vor unberechtigtem Zugriff Dritter und die angemeldeten Geräte vor dem Zugriff von unberechtigten Dritten zu schützen;<br>
+
+<br>
+
+c.den Dienst Dritten nicht entgeltlich oder gegen sonstige Vorteile zur Verfügung zu stellen oder weiterzugeben; ebenso wenig dürfen Verbindungen für Dritte (insbesondere gegen Gegenleistung) hergestellt werden;<br>
+
+<br>
+
+d. bei der Nutzung die allgemeinen Gesetze, insbesondere Strafgesetze, Wettbewerbsbestimmungen etc., zu beachten und die Rechte Dritter, insbesondere Urheberrechte, Lizenzrechte, Nutzungsrechte etc., zu wahren. Insbesondere verpflichtet sich der Nutzer,<br>
+
+<br>
+
+- keine urheberrechtlich geschützten Werke in Tauschbörsen unerlaubt anzubieten oder in anderer Weise zu verwerten;<br>
+
+<br>
+
+ e. dafür Sorge zu tragen, dass die von ihm oder über seinen Zugang zu dem Dienst eingestellten, abgerufenen oder sonst wie verfügbar gemachten oder genutzten Inhalte die Rechte Dritter nicht verletzen und nicht strafbar, sittenwidrig oder in sonstiger Weise rechtswidrig  sind; dazu zählen vor allem Informationen, die im Sinne der §§ 130, 130a und 131 StGB der Volksverhetzung dienen, zu Straftaten anleiten oder Gewalt verherrlichen bzw. verharmlosen, sexuell anstößig sind, im Sinne des § 184 StGB pornografisch sind oder geeignet sind, Kinder oder Jugendliche sittlich schwer zu gefährden;<br>
+
+<br>
+
+ f. die Bestimmungen des Jugendmedienstaatsvertrages und des Jugendschutzgesetzes zu beachten; <br>
+
+<br>
+
+ g. bei Zugriff auf Inhalte oder Software, die Eigentum Dritter sind bzw. in Lizenz von Dritten überlassen werden und die die Erfüllung bestimmter Nutzungsbedingungen fordern, diese Bedingungen zu erfüllen.<br>
+
+<br>
+
+2. Der Nutzer ist ferner insbesondere verpflichtet, Folgendes zu unterlassen:
+<br>
+
+<br>
+
+a. unaufgeforderten und/oder verdeckten Versand von Informationen, Programmen und sonstigen Inhalten, z. B. Massen-E-Mails  oder SMS mit unerwünschter und unverlangter Werbung (sog. Spamming) oder E-Mails mit Dateianhängen wie Einwählprogrammen;<br>
+
+<br>
+
+b. rechtswidrige Kontaktaufnahme durch Telekommunikationsmittel (sog. Stalking; § 238 Strafgesetzbuch);<br>
+
+<br>
+
+c. unbefugtes Abrufen von Informationen oder Daten und unbefugtes Eindringen in Datenverarbeitungssysteme oder -netze.<br>
+
+<br>
+
+
+3. Der Nutzer ist selbst dafür verantwortlich,<br>
+
+<br>
+
+a. sicherzustellen, dass alle Einrichtungen des Nutzers, die er für den Zugang zu dem Dienst nutzt, für diesen Dienst geeignet sind sowie ausreichend gegen Bedrohungen und Datenzugriffe Dritter, wie z. B. Viren, Würmer und trojanische Pferde, durch Virenscanner, Firewall etc. geschützt sind;<br>
+
+<br>
+
+b. für eine verschlüsselte Übertragung der von ihm oder an ihn unter Nutzung des Dienstes übermittelten Daten zu sorgen, z. B. durch Nutzung von SSL-Verschlüsselung (u. a. https), VPN;<br>
+
+<br>
+
+c. alle Einrichtungen des Nutzers entsprechend der Bedienungsanleitung des jeweiligen Herstellers zu benutzen.<br>
+
+<br>
+
+- sicherzustellen, dass alle Einrichtungen des Nutzers, die er für
+
+den Zugang zu dem Dienst nutzt:<br>
+
+<br>
+
+
+4. Verletzt der Nutzer seine Pflichten und Obliegenheiten nach diesem Abschnitt, so ist Vodafone berechtigt, jederzeit den Zugang zu dem kostenlosen Dienst zu sperren.<br>
+
+<br>
+
+<h5>IV. Datensicherheit</h5>
+
+1. Der Nutzer erkennt an, dass Vodafone aufgrund der Art des Dienstes nicht gewährleisten kann, dass der Dienst gegen rechtswidrige Zugriffe oder Nutzung geschützt ist.<br>
+
+<br>
+
+2. Vodafone übernimmt keine Haftung dafür, dass Informationen und Daten, die durch den Nutzer über den Dienst und/oder das Internet übermittelt werden, bei der Übermittlung von Dritten eingesehen, abgefangen oder verändert werden, von dem vorgeblichen Absender stammen oder den vorgesehenen Empfänger erreichen.<br>
+
+<br>
+
+
+<h5>V. Inhalteverantwortung und Haftung des Nutzers</h5>
+
+1. Der Nutzer trägt die alleinige Verantwortung für alle Inhalte, die er über den Zugang zum Internet oder den Dienst überträgt oder auf sonstige Weise verbreitet (z. B. auch per E-Mail, Newsgroups, Chat-Diensten), gegenüber Vodafone und Dritten. Dies gilt auch für Inhalte, die durch Dritte entsprechend übertragen oder verbreitet werden, deren Zugang zum Dienst der Nutzer zu vertreten hat. Die Inhalte unterliegen keiner Überprüfung durch Vodafone.<br>
+
+<br>
+
+2. Der Nutzer stellt Vodafone von sämtlichen Ansprüchen Dritter frei, die auf einer Verletzung der Pflichten des Nutzers aus dem Abschnitt „Pflichten und Obliegenheiten des Nutzers“, einer rechtswidrigen Verwendung der Dienste und der hiermit verbundenen Leistungen durch den Nutzer oder auf entsprechenden Handlungen Dritter, deren Zugang zum Dienst von Vodafone der Nutzer zu vertreten hat, beruhen. Dies gilt insbesondere für Ansprüche, die sich aus datenschutzrechtlichen, urheberrechtlichen oder sonstigen rechtlichen Streitigkeiten ergeben, die mit der Nutzung der Dienste verbunden sind. Erkennt der Nutzer oder muss er erkennen, dass ein solcher Verstoß droht, besteht die Pflicht zur unverzüglichen Unterrichtung von Vodafone.<br>
+
+
+
+<h5>VI. Haftung von Vodafone</h5>
+
+1. Vodafone haftet bei der Erbringung von Telekommunikationsdiensten für nicht vorsätzlich verursachte Vermögensschäden nur bis zu einem Betrag von 12.500 € je Endnutzer. Entsteht die Schadensersatzpflicht durch eine einheitliche Handlung oder durch ein einheitliches schadenverursachendes Ereignis gegenüber mehreren Endnutzern und beruht dies nicht auf Vorsatz, so ist die Schadensersatzpflicht unbeschadet der Begrenzung in Satz 1 in der Summe auf höchstens 30 Mio. € begrenzt. Übersteigen die Entschädigungen, die mehreren Geschädigten aufgrund desselben Ereignisses zu leisten sind, die Höchstgrenze, so wird der Schadensersatz in dem Verhältnis gekürzt, in dem die Summe aller Schadensersatzansprüche zur Höchstgrenze steht. Die Haftungsbegrenzung nach den Sätzen 1 bis 3 gilt nicht für Ansprüche auf Ersatz des Schadens, der durch den Verzug der Zahlung von Schadensersatz entsteht.<br>
+
+<br>
+
+2. Für schuldhaft verursachte Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit haftet Vodafone unbegrenzt. Für Sach- und für Vermögensschäden, die außerhalb des Anwendungsbereichs von Ziffer 1 liegen, haftet Vodafone unbegrenzt bei Vorsatz und grober Fahrlässigkeit. Im Übrigen haftet Vodafone nur bei schuldhafter Verletzung wesentlicher Vertragspflichten, wobei die Haftung auf den Ersatz des vertragstypischen, vorhersehbaren Schadens begrenzt ist. Eine wesentliche Pflicht ist eine solche, deren Erfüllung die ordnungsgemäße Durchführung des Vertrages überhaupt erst ermöglicht, deren Verletzung die Erreichung des Vertragszweckes gefährdet und auf deren Einhaltung der Nutzer regelmäßig vertrauen darf.<br>
+
+<br>
+
+3. Die Haftung nach dem Produkthaftungsgesetz bleibt ebenso unberührt wie die Haftung für arglistig verschwiegene Mängel oder im Rahmen einer übernommenen Garantie.<br>
+
+<br>
+
+4. Für den Verlust von Daten haftet Vodafone bei leichter Fahrlässigkeit unter den Voraussetzungen und im Umfang von Ziffer 2 nur, soweit der Nutzer seine Daten in im Hinblick auf die jeweilige Anwendung angemessenen Intervallen in geeigneter Form gesichert hat, damit diese mit vertretbarem Aufwand wiederhergestellt werden können.<br>
+
+<br>
+
+5. Die Haftung von Vodafone für alle übrigen Schäden ist ausgeschlossen.
+<br>
+
+<h4>C. Datenschutz</h4>
+
+Zur Erbringung des Dienstes und der Störungsbeseitigung speichert Vodafone temporär die Verkehrsdaten (IP- und MAC-Adresse) der angemeldeten Geräte. Diese Daten werden spätestens 48 Stunden nach der Verbindung wieder gelöscht.<br>
+
+<br>
+</div>
+                <div class="modal-footer">
+                    <a href="https://hotspot.vodafone.de/static/nutzungsbedingungen_baykom.pdf" class="nPdf ng-binding" target="_blank" rel="noopener">Nutzungsbedingungen als PDF</a>
+                    <a href="#" class="btn btn-large btn-block ng-binding" data-dismiss="modal" aria-hidden="true"><span class="ieLe"></span>Fenster schließen<span class="ieRe"></span></a>
+                </div>
+            </div>
+
+            <!-- Modal Screen: FAQ -->
+            <div id="faq-simple" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="FAQ" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="FAQ">FAQ</h3>
+                </div>
+                <!-- <div class="modal-body" ng-bind-html="translate.global.faq.content"></div> -->
+                <div class="modal-body">
+                    <div id="accordion">
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="card-link ng-binding" data-toggle="collapse" href="#collapseOne">
+                                    So nutzen Sie BayernWLAN
+                                </a>
+                            </div>
+                            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                                <div class="card-body ng-binding">
+                                    - Schalten Sie an Ihrem Endgerät, womit Sie ins Internet gehen wollen, die WLAN-Funktion ein.
+
+                                    <br>
+                                    - Wählen Sie in diesem Menü unter den WLAN-Netzwerken das WLAN “@BayernWLAN” aus.
+
+                                    <br>
+                                    - Bei vielen Endgeräten öffnet sich nun automatisch ein Login-Fenster. Sollte das nicht passieren, tippen Sie “https://hotspot.vodafone.de/bayern/” in die Adresszeile von Ihrem Browser. Bestätigen Sie anschließend die Eingabe.
+
+                                    <br>
+                                    - Daraufhin öffnet sich eine Landing-Page. Dort akzeptieren Sie die Nutzungsbedingungen und können sich über den Button “Verbinden“ mit dem BayernWLAN verbinden.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link ng-binding" data-toggle="collapse" href="#collapseTwo">
+                                    Was tun, wenn BayernWLAN nicht funktioniert?
+                                </a>
+                            </div>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body ng-binding">
+                                    - Versichern Sie sich in Ihren WLAN-Einstellungen, ob Sie mit dem WLAN “@BayernWLAN” verbunden sind. Manchmal verbinden sich die mobilen Endgeräte kurz mit dem WLAN, springen dann aber schnell wieder in das Mobilfunknetz.
+
+                                    <br>
+                                    - Geben Sie in der Adresszeile von Ihrem Browser “ https://hotspot.vodafone.de/bayern/” ein und loggen sich über den Button “Verbinden” ein.
+
+                                    <br>
+                                    - Funktioniert das auch nicht, starten Sie ihr Endgerät bitte neu und schauen Sie, ob eventuell das WLAN wirklich eingeschaltet und der Flugmodus deaktiviert ist.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link ng-binding" data-toggle="collapse" href="#collapseThree">
+                                    Wie sicher ist BayernWLAN eigentlich?
+                                </a>
+                            </div>
+                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                <div class="ng-binding">
+                                    - Beim BayernWLAN handelt es sich um ein öffentliches WLAN-Netz, wie man es zum Beispiel von WLAN-Angeboten in Hotels kennt.
+                                    <br>
+                                    - Unser WLAN-System verfügt über Sicherheitstechnologien (bspw. die sogenannte Client Isolation, die den Datenzugriff zwischen Geräten im WLAN unterbindet), die die Datenübertragung deutlich sicherer machen als in WLAN-Netzen, die in Cafés oder anderen öffentlichen Bereichen zu finden sind.
+                                    <br>
+                                    - Um eine sichere Übertragung zu gewährleisten, empfehlen wir Ihnen die Nutzung von VPN-Verbindung oder nur Webseiten mit dem Zusatz “https://” (geschlossenes Schloss in der Adresszeile des Browsers) zu besuchen.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link ng-binding" data-toggle="collapse" href="#collapseFour">
+                                    Wie funktioniert der Jugendschutz im BayernWLAN?
+                                </a>
+                            </div>
+                            <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                <div class="card-body ng-binding">
+                                     - Beim BayernWLAN läuft ein aktiver Jugendschutzfilter auf DNS Basis. Die sehr umfangreichen Filterlisten werden durch den Verein JusProg e.V. mehrmals täglich aktualisiert. Der Freistaat Bayern nimmt auf den Inhalt der Filterlisten keinen Einfluss.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link ng-binding" data-toggle="collapse" href="#collapseFive">
+                                    Technische Probleme mit BayernWLAN
+                                </a>
+                            </div>
+                            <div id="collapseFive" class="collapse" data-parent="#accordion">
+                                <div class="card-body ng-binding">
+                                    - Eine durch den Jugendschutzfilter gesperrte Seite wir durch ein Sperrseite gekennzeichnet. Sollten Sie einen Link zu einer gesperrten Seite aus einer bestehenden verschlüsselten Verbindung (https://) aufrufen, ist dass Einblenden der Sperrseite technisch nicht möglich.
+                                    <br>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="collapsed card-link ng-binding" data-toggle="collapse" href="#collapseSix">
+                                    Warum muss ich im BayernWLAN mehrmals täglich die Nutzungsbedingungen bestätigen?
+                                </a>
+                            </div>
+                            <div id="collapseSix" class="collapse" data-parent="#accordion">
+                                <div class="card-body ng-binding">
+                                    Möglicherweise haben Sie auf Ihrem Smartphone eine Funktion aktiviert, welche Ihre Identität beim nutzen öffentlicher WLAN Zugangspunkte schützen soll. Hierbei wird die normalerweise gerätespezifische Kennung (MAC Adresse) ihres Gerätes durch zufällig generierte MAC Adressen ersetzt um die Verbindung zum WLAN Netz aufzubauen. Das „Bayern WLAN“ speichert die MAC Adresse für 48h, um wiederholte Anfragen zur Bestätigung der Nutzungsbedingungen zu vermeiden. Ändert ihr Gerät diese MAC Adresse, kann das „BayernWLAN“ dieses Komfortmerkmal nicht mehr bieten. Wenn sie es nutzen möchten, deaktivieren sie bitte die Generierung zufälliger MAC-Adressen in den WLAN-Einstellungen.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-large btn-block ng-binding" data-dismiss="modal" aria-hidden="true"><span class="ieLe"></span>Fenster schließen<span class="ieRe"></span></a>
+                </div>
+            </div>
+
+            <!-- Modal Screen: Generic modal screen -->
+            <div id="genericModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="genericModal" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="genericModal">
+                        <!-- Empty -->
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <!-- Empty -->
+                </div>
+                <div class="modal-footer">
+                    <!-- Empty -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer id="fuss" class="curved curved-hz-2" style="position: relative;">
+        <div class="container">
+            <div class="nav nav-pills fn1">
+                <div class="text-center" style="font-size: 14px;font-family: 'VodafoneRgRegular';"><a class="text-center ng-binding" ng-click="handleLogout(element)" role="button">Accesspoint ID: UE-9-4-243</a> - <a href="http://www.vodafone.de/impressum.html" target="_blank" rel="noopener" role="button" class="ng-binding">Impressum</a> - <a>0800-6648386</a></div>
+            </div>
+            <div class="clearer"></div>
+        </div>
+    </footer>
+</div>
+<script type="application/javascript">
+    angular.bootstrap(document, ['kdgwifi']);
+</script>
+<script type="text/javascript" src="https://hotspot.vodafone.de/api/v4/check"></script>
+
+
+</body>
+</html>
