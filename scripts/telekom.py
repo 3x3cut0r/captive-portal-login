@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 #
-# Author:       Julian Reith (original inetiu inspiration)
+# Author:       Julian Reith
 # E-Mail:       julianreith@gmx.de
 # Version:      0.1
 # Last Updated: 2025-01-01
 #
 # Description:
-# Generic captive-portal login script (BayernWLAN blueprint).
+# Generic captive-portal login script (Telekom Hotspot blueprint).
 # It checks internet connectivity and, if blocked, requests the portal page,
 # extracts the login form, and "presses" the submit button by sending the form
 # request. The configuration at the top should be enough to adapt to other
@@ -27,25 +27,20 @@ PROBE_URL = "http://connectivitycheck.gstatic.com/generate_204"
 PROBE_EXPECTED_STATUS = 204
 
 # Fallback portal URL (if the probe did not return a login page).
-PORTAL_FALLBACK_URL = (
-    "https://hotspot.vodafone.de/bayern/"
-    "?A=B&RequestedURI=http%3A%2F%2Fdetectportal.firefox.com%2Fcanonical.html"
-)
+PORTAL_FALLBACK_URL = "https://hotspot.t-mobile.net/"
 
 # Portal form identification rules.
-FORM_ID = "loginForm"
-FORM_ACTION_CONTAINS = "/api/v4/login"
+FORM_ID = None
+FORM_ACTION_CONTAINS = "login"
 
-# Default fields that are commonly required by BayernWLAN.
-DEFAULT_FORM_FIELDS = {
-    "loginProfile": "6",
-    "accessType": "termsOnly",
-    "action": "redirect",
-    "portal": "bayern",
-}
+# Button text to look for (e.g., "Jetzt surfen")
+BUTTON_TEXT_CONTAINS = "surf"
+
+# Default fields that are commonly required by Telekom Hotspot.
+DEFAULT_FORM_FIELDS = {}
 
 # Optional query parameters copied from the portal URL when missing in the form.
-QUERY_FIELDS_FROM_PORTAL_URL = ["sessionID"]
+QUERY_FIELDS_FROM_PORTAL_URL = ["sessionId", "mac", "apMac", "clientMac"]
 
 # Timeouts (seconds).
 REQUEST_TIMEOUT = 10
@@ -85,7 +80,7 @@ class CaptivePortalFormParser(HTMLParser):
         if self.form_id and attrs_dict.get("id") == self.form_id:
             return True
         if self.action_contains and self.action_contains in (attrs_dict.get("action") or ""):
-            return False
+            return True
         return False
 
 

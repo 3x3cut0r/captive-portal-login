@@ -40,7 +40,7 @@ import requests
 import ssl
 import sys
 from requests import adapters
-from urllib3 import poolmanager
+from urllib3 import poolmanager  # type: ignore[import]
 
 ### GLOBAL VARS ###
 # urls:
@@ -65,7 +65,7 @@ export_path = "/tmp/inetiu/"        # the last "/" is important! -> do not enter
 
 ### CLASSES ###
 class TLSAdapter(adapters.HTTPAdapter):
-    def init_poolmanager(self, connections, maxsize, block=False):
+    def init_poolmanager(self, connections: int, maxsize: int, block: bool = False, **kwargs: object) -> None:  # type: ignore[override]
         """Create and initialize the urllib3 Poolmanager."""
         ctx = ssl.create_default_context()
         ctx.set_ciphers('DEFAULT@SECLEVEL=1')
@@ -73,7 +73,9 @@ class TLSAdapter(adapters.HTTPAdapter):
             num_pools=connections,
             block=block,
             ssl_version=ssl.PROTOCOL_TLS,
-            ssl_context=ctx)
+            ssl_context=ctx,
+            **kwargs,
+        )
 
 ### FUNCTIONS ###
 def getLoginState(response):

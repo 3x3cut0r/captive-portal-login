@@ -1,0 +1,11 @@
+[Unit]
+Description=Captive Portal Login Timer
+Requires=captive-portal.service
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=5min
+Unit=captive-portal.service
+
+[Install]
+WantedBy=timers.target

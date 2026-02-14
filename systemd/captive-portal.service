@@ -1,0 +1,18 @@
+[Unit]
+Description=Captive Portal Login Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /PFAD/ZU/captive-portal-login/scripts/SCRIPT.py
+StandardOutput=journal
+StandardError=journal
+
+# Automatisch alle 5 Minuten ausführen
+# Entferne die Zeilen unten, wenn du nur manuell starten willst
+# Für automatische Wiederholung:
+# REMINDER: systemd-timer statt cron verwenden
+
+[Install]
+WantedBy=multi-user.target
