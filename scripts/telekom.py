@@ -33,8 +33,11 @@ PORTAL_FALLBACK_URL = "https://hotspot.t-mobile.net/"
 FORM_ID = None
 FORM_ACTION_CONTAINS = "login"
 
-# Button text to look for (e.g., "Jetzt surfen")
-BUTTON_TEXT_CONTAINS = "surf"
+# Button text that should trigger the login request.
+BUTTON_TEXT_CONTAINS = "online gehen"
+
+# If this text is shown, Telekom already granted internet access.
+ALREADY_ONLINE_TEXT_CONTAINS = "jetzt surfen"
 
 # Default fields that are commonly required by Telekom Hotspot.
 DEFAULT_FORM_FIELDS = {}
@@ -49,13 +52,22 @@ REQUEST_TIMEOUT = 10
 
 
 class CaptivePortalFormParser(HTMLParser):
-    def __init__(self, form_id: Optional[str], action_contains: Optional[str]) -> None:
+    def __init__(
+        self,
+        form_id: Optional[str],
+        action_contains: Optional[str],
+        button_text_contains: Optional[str],
+    ) -> None:
         super().__init__()
         self.form_id = form_id
         self.action_contains = action_contains
+        self.button_text_contains = (button_text_contains or "").lower().strip()
         self.active_form: Optional[Dict[str, Optional[str]]] = None
+        self.active_form_index: Optional[int] = None
         self.forms: List[Dict[str, Optional[str]]] = []
         self.inputs: Dict[int, Dict[str, str]] = {}
+        self.form_submit_match: Dict[int, bool] = {}
+        self.capture_button_text_for_form: Optional[int] = None
         self._form_counter = 0
 
     def handle_starttag(self, tag: str, attrs: List[Tuple[str, Optional[str]]]) -> None:
@@ -64,17 +76,54 @@ class CaptivePortalFormParser(HTMLParser):
         if tag == "form":
             if self._matches_form(attrs_dict):
                 self.active_form = attrs_dict
+                self.active_form_index = self._form_counter
                 self.forms.append(attrs_dict)
                 self.inputs[self._form_counter] = {}
+                self.form_submit_match[self._form_counter] = False
                 self._form_counter += 1
+            return
+
+        if tag == "form" and self.active_form is not None:
+            return
+
+        if tag == "button" and self.active_form is not None:
+            button_type = (attrs_dict.get("type") or "submit").lower()
+            if button_type == "submit":
+                self.capture_button_text_for_form = self.active_form_index
             return
 
         if tag == "input" and self.active_form is not None:
             name = attrs_dict.get("name")
             value = attrs_dict.get("value") or ""
             input_type = (attrs_dict.get("type") or "").lower()
+            if input_type in {"submit", "button"}:
+                self._mark_submit_match(value)
             if name and input_type != "submit":
                 self.inputs[self._form_counter - 1][name] = value
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "button":
+            self.capture_button_text_for_form = None
+            return
+        if tag == "form":
+            self.capture_button_text_for_form = None
+            self.active_form = None
+            self.active_form_index = None
+
+    def handle_data(self, data: str) -> None:
+        if self.capture_button_text_for_form is None:
+            return
+        self._mark_submit_match(data, self.capture_button_text_for_form)
+
+    def _mark_submit_match(self, text: str, form_index: Optional[int] = None) -> None:
+        if not self.button_text_contains:
+            return
+        if form_index is None:
+            form_index = self.active_form_index
+        if form_index is None:
+            return
+        if self.button_text_contains in text.lower():
+            self.form_submit_match[form_index] = True
 
     def _matches_form(self, attrs_dict: Dict[str, Optional[str]]) -> bool:
         if self.form_id and attrs_dict.get("id") == self.form_id:
@@ -105,16 +154,32 @@ def fetch_portal_page(session: requests.Session) -> Tuple[str, str]:
 
 
 def parse_login_form(html: str) -> Tuple[Dict[str, str], Dict[str, str]]:
-    parser = CaptivePortalFormParser(FORM_ID, FORM_ACTION_CONTAINS)
+    parser = CaptivePortalFormParser(FORM_ID, FORM_ACTION_CONTAINS, BUTTON_TEXT_CONTAINS)
     parser.feed(html)
 
     if not parser.forms:
         raise RuntimeError("No matching login form found in portal HTML.")
 
-    form_attrs_raw = parser.forms[0]
+    selected_index = 0
+    if parser.button_text_contains:
+        matching_indices = [
+            idx for idx, matches in parser.form_submit_match.items() if matches
+        ]
+        if not matching_indices:
+            raise RuntimeError(
+                f"No matching login button found (expected text: {BUTTON_TEXT_CONTAINS!r})."
+            )
+        selected_index = matching_indices[0]
+
+    form_attrs_raw = parser.forms[selected_index]
     form_attrs: Dict[str, str] = {k: v for k, v in form_attrs_raw.items() if v is not None}
-    form_inputs = parser.inputs.get(0, {})
+    form_inputs = parser.inputs.get(selected_index, {})
     return form_attrs, form_inputs
+
+
+def portal_indicates_online(html: str) -> bool:
+    marker = ALREADY_ONLINE_TEXT_CONTAINS.strip().lower()
+    return bool(marker) and marker in html.lower()
 
 
 def merge_form_data(
@@ -160,6 +225,13 @@ def main() -> int:
 
     print("Internet not reachable. Attempting captive portal login ...")
     portal_url, portal_html = fetch_portal_page(session)
+
+    if portal_indicates_online(portal_html):
+        print(
+            "DONE: Portal shows 'Jetzt surfen' page. Treating connection as online/already unlocked."
+        )
+        return 0
+
     form_attrs, form_inputs = parse_login_form(portal_html)
     payload = merge_form_data(form_inputs, portal_url, DEFAULT_FORM_FIELDS)
 
